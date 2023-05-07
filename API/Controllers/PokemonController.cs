@@ -9,10 +9,10 @@ using API.Models;
 
 namespace API.Controllers
 {
-    [Route("api/pokemon")]
+    [Route("pokemon")]
     public class PokemonController : Controller
     {
-        private List<Pokemon> pokemon = new List<Pokemon>()
+        private static List<Pokemon> pokemon = new List<Pokemon>()
         {
             new Pokemon(){id=0, name="Pikachu"},
             new Pokemon(){id=1, name="NidoranM"}
@@ -22,6 +22,12 @@ namespace API.Controllers
         public IEnumerable<Pokemon> Get()
         {
             return pokemon;
+        }
+
+        [HttpPost]
+        public void Post([FromBody]String pokemonName)
+        {
+            pokemon.Add(new Pokemon() {id=(pokemon.Count + 1), name=pokemonName});
         }
     }
 }

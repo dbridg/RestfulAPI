@@ -18,16 +18,42 @@ namespace API.Controllers
             new Pokemon(){id=1, name="NidoranM"}
         };
 
+        /// <summary>
+        /// Returns a list of all pokemon exisiting
+        /// </summary>
+        /// <returns>the list of pokemon</returns>
         [HttpGet]
         public IEnumerable<Pokemon> Get()
         {
             return pokemon;
         }
 
+        /// <summary>
+        /// Adds a pokemon to the list
+        /// </summary>
+        /// <param name="pokemonName">Name of the pokemon to be added</param>
         [HttpPost]
         public void Post([FromBody]String pokemonName)
         {
-            pokemon.Add(new Pokemon() {id=(pokemon.Count + 1), name=pokemonName});
+            pokemon.Add(new Pokemon() {id=(pokemon.Count - 1), name=pokemonName});
+        }
+
+        /// <summary>
+        /// Edits a pokemon on the list
+        /// </summary>
+        /// <param name="id">the id of the desired pokemon to change</param>
+        /// <param name="pokemonName">desired name to change to</param>
+        [HttpPut("{id}")]
+        public void Put(int id,[FromBody]String pokemonName)
+        {
+            Pokemon p = new Pokemon() { id = id, name = pokemonName };
+            pokemon[id] = p;
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            pokemon.RemoveAt(id);
         }
     }
 }
